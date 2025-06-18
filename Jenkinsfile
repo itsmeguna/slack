@@ -12,9 +12,7 @@ pipeline {
     post {
         success {
             slackSend(
-                channel: '#jenkins-job
-
-',
+                channel: '#jenkins-job',
                 message: "✅ Build *${env.JOB_NAME}* #${env.BUILD_NUMBER} by ${env.BUILD_USER} succeeded in ${currentBuild.durationString}"
             )
         }
