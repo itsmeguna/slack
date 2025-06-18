@@ -11,16 +11,39 @@ pipeline {
 
     post {
         success {
-            slackSend(
-                channel: '#jenkins-job',
-                message: "✅ Build *${env.JOB_NAME}* #${env.BUILD_NUMBER} by ${env.BUILD_USER} succeeded in ${currentBuild.durationString}"
-            )
+            script {
+                def duration = currentBuild.durationString.replace(' and counting', '')
+                def message = """
+✅ *Build Pipeline* `${env.JOB_NAME}` *Succeeded*
+🔢 *Build Info*: #${env.BUILD_NUMBER}
+📦 *Pipeline ID*: ${env.EXECUTOR_NUMBER}
+👤 *Triggered by*: ${currentBuild.getBuildCauses()[0]?.userName ?: "Auto Trigger"}
+⏱ *Duration*: ${duration}
+""".stripIndent()
+
+                slackSend (
+                    channel: '#jenkins-job',
+                    message: message
+                )
+            }
         }
+
         failure {
-            slackSend(
-                channel: '#jenkins-job',
-                message: "❌ Build *${env.JOB_NAME}* #${env.BUILD_NUMBER} by ${env.BUILD_USER} failed after ${currentBuild.durationString}"
-            )
+            script {
+                def duration = currentBuild.durationString.replace(' and counting', '')
+                def message = """
+❌ *Build Pipeline* `${env.JOB_NAME}` *Failed*
+🔢 *Build Info*: #${env.BUILD_NUMBER}
+📦 *Pipeline ID*: ${env.EXECUTOR_NUMBER}
+👤 *Triggered by*: ${currentBuild.getBuildCauses()[0]?.userName ?: "Auto Trigger"}
+⏱ *Duration*: ${duration}
+""".stripIndent()
+
+                slackSend (
+                    channel: '#jenkins-job',
+                    message: message
+                )
+            }
         }
     }
 }
