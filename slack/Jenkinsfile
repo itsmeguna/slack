@@ -1,0 +1,10 @@
+pipeline {
+    agent any
+    stages {
+        stage('Simple Echo') {
+            steps {
+                echo 'Hello Jenkins from dev branch slack folder!'
+            }
+        }
+    }
+}
