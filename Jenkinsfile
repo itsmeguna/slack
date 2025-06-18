@@ -14,10 +14,10 @@ pipeline {
             script {
                 def duration = currentBuild.durationString.replace(' and counting', '')
                 def message = """
-✅ *Build Pipeline* `${env.JOB_NAME}` *Succeeded*
-🔢 *Build Info*: #${env.BUILD_NUMBER}
-📦 *Pipeline ID*: ${env.EXECUTOR_NUMBER}
-⏱ *Duration*: ${duration}
+ *Build Pipeline* `${env.JOB_NAME}` *Succeeded*
+ *Build Info*: #${env.BUILD_NUMBER}
+ *Pipeline ID*: ${env.EXECUTOR_NUMBER}
+ *Duration*: ${duration}
 """.stripIndent()
 
                 slackSend (
